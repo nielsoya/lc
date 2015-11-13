@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:util="http://www.springframework.org/schema/util"
+        xsi:schemaLocation=
+                "http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+                http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+                http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+        default-lazy-init="false">
+
+    <context:component-scan base-package="org.nho.vs">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+    </context:component-scan>
+
+    <import resource="classpath:db-context.xml"/>
+
+    <!-- JSON convertation been name is needed for auto-config boot classes do not change-->
+    <bean id="primaryObjectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+        <property name="featuresToEnable">
+            <array>
+                <util:constant static-field="com.fasterxml.jackson.databind.SerializationFeature.WRAP_ROOT_VALUE"/>
+                <util:constant static-field="com.fasterxml.jackson.databind.SerializationFeature.CLOSE_CLOSEABLE"/>
+                <util:constant static-field="com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT"/>
+                <util:constant static-field="com.fasterxml.jackson.databind.DeserializationFeature.UNWRAP_ROOT_VALUE"/>
+                <util:constant static-field="com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES"/>
+            </array>
+        </property>
+    </bean>
+
+    <bean name="messageConverters" class="org.springframework.boot.autoconfigure.web.HttpMessageConverters">
+        <constructor-arg>
+            <list>
+                <ref bean="jsonMessageConverter"/>
+            </list>
+        </constructor-arg>
+    </bean>
+    
+    <!-- JSON convertation jsonHttpMessageConverter-->
+    <bean id="jsonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes" value="application/json"/>
+        <property name="objectMapper" ref="primaryObjectMapper"/>
+    </bean>
+
+</beans>

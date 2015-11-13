@@ -1,0 +1,29 @@
+<configuration scan="true" scanPeriod="120 seconds">
+    <root level="INFO">
+        <appender class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>vts.log</file>
+
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <!-- rollover daily -->
+                <fileNamePattern>
+                    vts-%d{yyyy-MM-dd}.%i.log.gz
+                </fileNamePattern>
+                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <!-- or whenever the file size reaches limit -->
+                    <maxFileSize>100MB</maxFileSize>
+                </timeBasedFileNamingAndTriggeringPolicy>
+                <maxHistory>14</maxHistory>
+            </rollingPolicy>
+
+            <encoder>
+                <pattern>%d [%thread] %-5level %logger{36} - %msg%n</pattern>
+            </encoder>
+        </appender>
+
+    </root>
+
+    <logger name="org.nho" level="DEBUG"/>
+
+    <logger name="org.springframework" level="WARN"/>
+
+</configuration>

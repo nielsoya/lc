@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<assembly
+    xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.1"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.1 http://maven.apache.org/xsd/assembly-1.1.1.xsd">
+
+    <id>VTS</id>
+
+    <formats>
+        <format>zip</format>
+    </formats>
+
+    <includeBaseDirectory>true</includeBaseDirectory>
+    <baseDirectory>${version}</baseDirectory>
+
+    <fileSets>
+
+         <fileSet>
+            <directory>src/assembly/resources</directory>
+            <outputDirectory>/cfg</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>0644</fileMode>
+        </fileSet>
+
+       </fileSets>
+        <dependencySets>
+        <dependencySet>
+            <useProjectArtifact>true</useProjectArtifact>
+            <useTransitiveDependencies>true</useTransitiveDependencies>
+            <useTransitiveFiltering>false</useTransitiveFiltering>
+            <useStrictFiltering>true</useStrictFiltering>
+
+            <outputDirectory>lib</outputDirectory>
+            <scope>runtime</scope>
+        </dependencySet>
+    </dependencySets>
+</assembly>
