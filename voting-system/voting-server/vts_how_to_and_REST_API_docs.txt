@@ -7,9 +7,7 @@ next software
 
 
 1)build project :
-Un-pack attached archive( L_C.rar ) to the directory of your choce.
-Go to this directory: /L_C/voting-system/voting-server/
-Execute: mvn clean install
+Execute from  ... /voting-system/voting-server/ : mvn clean install
 -check results 
  go to newly created target directory : /target 
 - there should be archive : voting-system-server-1.0.0-SNAPSHOT.zip
@@ -74,7 +72,7 @@ It should return something like this(HATEOAS-JSON format):
 ----------------
 REST-API:
 ---
-A) Add new restatraunt
+A) Add new restaraunt
 -
 REQUEST: 
 PUT : http://localhost:8080/rest-api/rstrn/?rstName=$RESTORAN_NAME?usrName=$ADMIN_USER  
@@ -208,3 +206,23 @@ NEGATIVE case(when voting after 11.00) :
 RESPONSE:
 HTTP-Status : 403 Forbidden 
 Body : Voting is allowed only before 11.00, but now it is: 2015-11-12T13:52:07.974
+
+-----
+4. REST API(s) to show the restaurants/menus  
+
+4.1 show all restaurants 
+GET http://localhost:8080/persistent-api/restaurants
+
+4.2 show restaurant by id 
+GET http://localhost:8080/persistent-api/restaurants/10
+
+4.3 show all menus 
+GET http://localhost:8080/persistent-api/menus
+
+4.3 show menus for particular restaurant (by it's id) 
+GET http://localhost:8080/persistent-api/restaurants/10/menus
+
+
+
+
+
